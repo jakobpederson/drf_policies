@@ -17,4 +17,4 @@ class Coverage(models.Model):
     policy = models.ForeignKey(Policy, related_name='coverages')
 
     def __str__(self):
-        return 'Coverage for {}'.format(self.policy__policy_number)
+        return 'Coverage for {}'.format(self.policy.policy_number)

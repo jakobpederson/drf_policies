@@ -1,9 +1,17 @@
 from rest_framework_json_api import serializers, relations
+from django.urls import reverse
 from policy_prototype.models import Policy, Coverage
 
 
 class PolicySerializer(serializers.HyperlinkedModelSerializer):
-    coverages = relations.ResourceRelatedField(read_only=True, many=True)
+    # coverages = relations.ResourceRelatedField(read_only=True, many=True)
+    coverages = serializers.SerializerMethodField('get_link')
+
+    def get_link(self, obj):
+        print(obj.coverages.all())
+        url = "http://localhost:8000/api/coverages/{}/"
+        new_list = [url.format(x.pk) for x in obj.coverages.all()]
+        return new_list
 
     # coverages = relations.HyperlinkedRelatedField(
     #     read_only=True,
@@ -14,10 +22,10 @@ class PolicySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Policy
-        fields = ('policy_number', 'coverages', 'url')
-        extra_kwargs = {
-            'url': {'view_name': 'coverage-detail'}
-        }
+        fields = ('policy_number', 'coverages') # , 'url')
+        # extra_kwargs = {
+        #     'url': {'view_name': 'coverage-detail'}
+        # }
 
 
 class CoverageSerializer(serializers.HyperlinkedModelSerializer):

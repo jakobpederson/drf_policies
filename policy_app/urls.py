@@ -19,5 +19,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/', include('policy_prototype.urls'))
+    url(r'^api/', include('policy_prototype.urls', namespace='api'))
 ]
