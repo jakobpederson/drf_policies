@@ -14,7 +14,10 @@ class PolicySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Policy
-        fields = ('policy_number', 'coverages')
+        fields = ('policy_number', 'coverages', 'url')
+        extra_kwargs = {
+            'url': {'view_name': 'coverage-detail'}
+        }
 
 
 class CoverageSerializer(serializers.HyperlinkedModelSerializer):
