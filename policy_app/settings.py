@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Application definition
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'policy_prototype.apps.PolicyPrototypeConfig',
+    'django_nose',
 ]
 
 MIDDLEWARE = [

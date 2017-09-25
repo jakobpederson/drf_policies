@@ -8,6 +8,9 @@ class Policy(models.Model):
     class Meta:
         ordering = ('policy_number',)
 
+    class JSONAPIMeta:
+        related_name = 'policy'
+
     def __str__(self):
         return self.policy_number
 
@@ -15,6 +18,9 @@ class Policy(models.Model):
 class Coverage(models.Model):
     liability = models.BooleanField(default=False)
     policy = models.ForeignKey(Policy, related_name='coverages')
+
+    class JSONAPIMeta:
+        related_name = 'coverage'
 
     def __str__(self):
         return 'Coverage for {}'.format(self.policy.policy_number)
