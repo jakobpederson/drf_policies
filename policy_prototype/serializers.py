@@ -7,7 +7,6 @@ class PolicySerializer(serializers.HyperlinkedModelSerializer):
     coverages = serializers.SerializerMethodField('get_link')
 
     def get_link(self, obj):
-        # print(obj.coverages.all())
         url = "http://localhost:8000/api/coverages/{}/"
         new_list = [url.format(x.pk) for x in obj.coverages.all()]
         return new_list
@@ -16,17 +15,15 @@ class PolicySerializer(serializers.HyperlinkedModelSerializer):
         model = Policy
         fields = ('policy_number', 'coverages')
 
-
-class CoverageSerializer(serializers.HyperlinkedModelSerializer):
-
-    # policy = serializers.ResourceRelatedField(read_only=True)
-    policy = serializers.SerializerMethodField('get_link')
-
-    def get_link(self, obj):
-        # print(obj.coverages.all())
+    def id(self, obj):
         url = "http://localhost:8000/api/policies/{}/"
         new_list = url.format(obj.policy.id)
         return new_list
+
+
+class CoverageSerializer(serializers.HyperlinkedModelSerializer):
+
+    policy = PolicySerializer()
 
     class Meta:
         model = Coverage
