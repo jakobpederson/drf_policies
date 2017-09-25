@@ -28,3 +28,19 @@ class CoverageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Coverage
         fields = ('liability', 'policy')
+
+    def create(self, validated_data):
+        policy_data = validated_data.pop('policy')
+        policy = Policy.objects.create(**policy_data)
+        coverage = Coverage.objects.create(policy=policy, **validated_data)
+        return coverage
+
+    def update(self, instance, validated_data):
+        policy_data = validated_data.pop('policy')
+        policy, _ = Policy.objects.get_or_create(**policy_data)
+        for i in validated_data:
+            attr = getattr(instance, i)
+            instance.attr = validated_data[i]
+        instance.policy = policy
+        instance.save()
+        return instance
