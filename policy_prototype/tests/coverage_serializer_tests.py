@@ -3,10 +3,13 @@ from django import test
 from rest_framework.reverse import reverse
 from rest_framework import status
 
+from policy_prototype.models import Policy
+
 
 class CoverageSerializerTests(test.TestCase):
 
     def test_can_create_a_coverage(self):
+        policy = Policy.objects.create(policy_number='x')
         data = {
             "data": {
                 "type": "coverage",
@@ -17,11 +20,8 @@ class CoverageSerializerTests(test.TestCase):
                 "relationships": {
                     "policy": {
                         "data": {
-                            "type": "policy",
-                            "id": "3",
-                            "attributes": {
-                                "policy_number": "abc"
-                            }
+                            "type": "Policy",
+                            "id": policy.pk
                         }
                     }
                 }
@@ -29,10 +29,12 @@ class CoverageSerializerTests(test.TestCase):
         }
         url = reverse('api:coverage-list')
         response = self.client.post(url, data=json.dumps(data), content_type='application/vnd.api+json')
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        expected = {'data': {'attributes': {'coverages': [], '': '123abc'}, 'id': '1', 'type': ''}}
+        from jpprint import jpprint
+        expected = {'data': {'rabbit': {'policy': {'data': {'type': 'policy', 'id': '1'}}}, 'type': 'coverage', 'attributes': {'liability': True}, 'id': '1'}}
+        jpprint(expected, response.json())
         self.assertEqual(expected, response.json())
+        self.fail('x')
 
     def test_validate_coverage_field(self):
         data = {

@@ -13,8 +13,6 @@ class PolicySerializer(serializers.ModelSerializer):
 
 class CoverageSerializer(serializers.ModelSerializer):
 
-    policy = serializers.HyperlinkedRelatedField(many=False, read_only=True, view_name='api:policy-detail')
-
     included_serializers = {
         "policy": PolicySerializer
     }
