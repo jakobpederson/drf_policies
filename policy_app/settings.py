@@ -25,7 +25,7 @@ SECRET_KEY = '8tgk7f*tyjp5v#s(^+9lh^jc61wu-9za^^ygl_zvok!8-n7+*c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '192.168.1.3']
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 

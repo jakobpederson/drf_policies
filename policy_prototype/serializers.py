@@ -11,7 +11,7 @@ class PolicySerializer(serializers.ModelSerializer):
         resource_name = 'policy'
 
 
-class CoverageSerializer(serializers.ModelSerializer):
+class CoverageSerializer(serializers.HyperlinkedModelSerializer):
 
     policy = serializers.HyperlinkedRelatedField(many=False, read_only=True, view_name='api:policy-detail')
 
