@@ -13,11 +13,20 @@ class PolicySerializerTests(test.TestCase):
                 "id": 1,
                 "attributes": {
                     "policy_number": "123abc"
+                },
+                "relationships": {
+                    "coverages": {
+                        "data": {
+                            "type": "coverage",
+                            "id": 1
+                        }
+                    }
                 }
             }
         }
         url = reverse('api:policy-list')
         response = self.client.post(url, data=json.dumps(data), content_type='application/vnd.api+json')
+        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         expected = {'data': {'attributes': {'coverages': [], 'policy_number': '123abc'}, 'id': '1', 'type': 'policy'}}
         self.assertEqual(expected, response.json())

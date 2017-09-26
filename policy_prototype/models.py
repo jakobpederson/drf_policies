@@ -5,9 +5,6 @@ class Policy(models.Model):
 
     policy_number = models.CharField(max_length=10)
 
-    class Meta:
-        ordering = ('policy_number',)
-
     class JSONAPIMeta:
         related_name = 'policy'
 

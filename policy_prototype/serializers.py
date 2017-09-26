@@ -13,9 +13,7 @@ class PolicySerializer(serializers.ModelSerializer):
 
 class CoverageSerializer(serializers.ModelSerializer):
 
-    included_serializers = {
-        "policy": PolicySerializer
-    }
+    policy =  PolicySerializer
 
     class Meta:
         model = Coverage
